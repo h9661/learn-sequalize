@@ -1,7 +1,7 @@
 # mysqlPracticeWithNode
 
 ## 체크포인트
-1. - [ ] mysql 연동
+1. - [x] mysql 연동
 
 
 
@@ -33,3 +33,8 @@ mysql: MySQL 클라이언트 프로그램을 실행하는 명령어입니다.
 
 7. `sequelize.sync()`를 실행하면 서버 실행 시 알아서 MySql과 연동된다.
 
+8. `sequelize`는 DB 작업을 쉽게 할 수 있도록 도와주는 ORM 라이브러리이다. 그렇다면 ORM이란 뭘까? ORM은 자바스크립트 객체와 관계형 DB를 서로 연결해주는 도구이다. ORM을 배워야 sequelize를 훨씬 더 잘 사용할 수 있을태니 학습해야겠다.
+
+9. ORM
+
+https://ooeunz.tistory.com/71
