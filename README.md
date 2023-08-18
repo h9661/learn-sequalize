@@ -95,3 +95,80 @@ User.hasMany(Comment, { onDelete: 'CASCADE' })를 사용하여 User와 Comment �
 Comment.belongsTo(User)를 사용하여 Comment 모델에 User 모델과의 관계를 설정합니다.
 이렇게 모델을 설정하면 User를 삭제할 때 연관된 Comment도 CASCADE 옵션에 따라 함께 삭제됩니다.
 ```
+
+10. sequelize로 table을 수정하고싶다? migration 기능 이용
+
+https://choice91.tistory.com/164
+
+`users table에 compaies를 외래키로 갖는 column 새로 생성해서 db 수정하기`
+
+당신이 설명한 상황에 따라 Sequelize 마이그레이션을 사용하여 User 모델에 Company의 id를 참조하는 새로운 foreign key column을 추가할 수 있습니다. 아래는 이 작업을 수행하는 예제 코드입니다:
+
+먼저, Sequelize 마이그레이션 파일을 생성합니다. 마이그레이션 파일은 데이터베이스 스키마 변경을 추적하고 적용하는 데 사용됩니다.
+
+npx sequelize-cli migration:generate --name add-company-id-to-user
+위 명령을 실행하면 새로운 마이그레이션 파일이 생성됩니다.
+
+생성된 마이그레이션 파일(XXXXXXXXXXXXXX-add-company-id-to-user.js)을 열어서 아래와 같이 수정합니다:
+
+```jsx
+'use strict';
+
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.addColumn('Users', 'CompanyId', {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'Companies', // 참조할 모델의 이름
+        key: 'id' // 참조할 컬럼의 이름
+      },
+      onUpdate: 'CASCADE', // 부모 레코드가 업데이트되면 자식 레코드도 업데이트됨
+      onDelete: 'SET NULL' // 부모 레코드가 삭제되면 자식 레코드의 컬럼 값은 NULL이 됨
+    });
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeColumn('Users', 'CompanyId');
+  }
+};
+```
+
+생성한 마이그레이션 파일을 실행하여 데이터베이스에 변경을 적용합니다.
+
+`npx sequelize-cli db:migrate`
+
+위 명령을 실행하면 마이그레이션이 수행되고 User 모델에 CompanyId라는 새로운 foreign key column이 추가됩니다.
+
+이제 User 모델과 Company 모델 간의 관계를 설정하고 사용할 수 있게 되었습니다. 필요에 따라 관계 정의와 모델 파일도 수정하여 사용하면 됩니다.
+
+테이블 생성 내용을 참조하니깐 다음의 내용이 나왔다.
+
+```jsx
+ KEY `users_company_id_foreign_idx` (`company_id`),
+  CONSTRAINT `users_company_id_foreign_idx` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+```
+이것의 의미가 무엇일까?
+
+```jsx
+위의 코드 조각은 데이터베이스 스키마 정의에서 외래 키(Foreign Key) 제약 조건을 나타냅니다. 이 코드는 데이터베이스 테이블 간의 관계를 정의하고, 이 관계를 통해 데이터 무결성을 유지하며 데이터 조작을 제한하는 역할을 합니다.
+
+여기서 주요한 구성 요소와 의미는 다음과 같습니다:
+
+KEY users_company_id_foreign_idx: 이 부분은 외래 키 인덱스의 이름을 나타냅니다. 인덱스는 데이터베이스에서 검색 성능을 향상시키기 위해 사용되는 구조입니다.
+
+(`company_id`): 이 부분은 외래 키로 사용되는 컬럼의 이름을 나타냅니다. 여기서는 company_id 컬럼이 외래 키로 사용됩니다.
+
+CONSTRAINT users_company_id_foreign_idx: 이 부분은 외래 키 제약 조건의 이름을 나타냅니다. 제약 조건은 데이터 무결성을 유지하기 위해 정의됩니다.
+
+FOREIGN KEY (company_id) REFERENCES companies (id): 이 부분은 외래 키의 참조 관계를 정의합니다. company_id 컬럼은 companies 테이블의 id 컬럼을 참조하게 됩니다. 즉, users 테이블의 company_id 컬럼 값은 companies 테이블의 id 값을 참조하게 됩니다.
+
+ON DELETE SET NULL: 이 부분은 부모 레코드가 삭제되었을 때 자식 레코드의 외래 키 값을 NULL로 설정하도록 지정하는 것을 나타냅니다. 즉, 부모 레코드가 삭제되면 해당 사용자 레코드의 company_id 컬럼 값이 NULL로 설정됩니다.
+
+ON UPDATE CASCADE: 이 부분은 부모 레코드의 기본 키 값이 업데이트되면, 자식 레코드의 외래 키 값을 자동으로 업데이트하도록 지정하는 것을 나타냅니다. 즉, 부모 레코드의 id 값이 변경되면 해당 사용자 레코드의 company_id 값도 업데이트됩니다.
+
+이 외래 키 제약 조건은 데이터 무결성을 유지하고 데이터베이스의 무결성과 일관성을 보장하기 위해 사용됩니다.
+```
+
+`sequelize migration:create --name <filename>`
+
+`sequelize db:migrate`
