@@ -26,6 +26,9 @@ mysql: MySQL 클라이언트 프로그램을 실행하는 명령어입니다.
 
 2. mysql 정리
 
+https://inpa.tistory.com/category/DBMS/MySQL
+지금은 다 보기엔 분량이 방대해서, 필요한 내용만 그때그때 찾아봐야겠다.
+
 3. `ejs` 템플릿 엔진 이외에도 `pug` 템플릿 엔진이 있다. 둘 다 사용해보자.
 
 4. `express generator`로 손쉽게 초기 프로젝트를 생성할 수 있다.
@@ -39,6 +42,9 @@ mysql: MySQL 클라이언트 프로그램을 실행하는 명령어입니다.
 https://ooeunz.tistory.com/71
 
 8. nunjucks
+
+https://inpa.tistory.com/entry/Nunjucks-%F0%9F%93%9A-%EB%84%8C%EC%A0%81%EC%8A%A4-%EB%AC%B8%EB%B2%95-%EC%A0%95%EB%A6%AC
+기본적으로 ejs와 비슷한 것 같다. 정리해놓고 사용해봐야겠다.
 
 9. sequelize에서 1:m 관계에서 on delete가 cascade 되게 하는 방법
 
