@@ -2,7 +2,11 @@
 
 ## 체크포인트
 1. - [x] mysql 연동
-
+2. - [x] model 작성
+3. - [x] model 몇가지 생성
+4. - [x] index router, user router, comment router 이해
+5. - [x] nunjucks 템플릿 엔진 파악하기
+6. - [ ] jquery로 ajax 처리해보기
 
 
 
@@ -38,3 +42,6 @@ mysql: MySQL 클라이언트 프로그램을 실행하는 명령어입니다.
 9. ORM
 
 https://ooeunz.tistory.com/71
+
+10. nunjucks
+
