@@ -6,7 +6,7 @@
 3. - [x] model 몇가지 생성
 4. - [x] index router, user router, comment router 이해
 5. - [x] nunjucks 템플릿 엔진 파악하기
-6. - [ ] jquery로 ajax 처리해보기
+6. - [x] jquery로 ajax 처리해보기
 
 
 
