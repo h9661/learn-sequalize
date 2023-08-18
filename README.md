@@ -7,6 +7,8 @@
 4. - [x] index router, user router, comment router 이해
 5. - [x] nunjucks 템플릿 엔진 파악하기
 6. - [x] jquery로 ajax 처리해보기
+7. - [ ] sequelize로 기존에 존재하는 table 수정해보기
+8. - [ ] 새로운 테이블로 ajax 기능 더 추가해서 사용해보기
 
 
 
