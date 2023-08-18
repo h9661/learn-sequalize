@@ -45,6 +45,10 @@ class User extends Sequelize.Model {
             foreignKey: "commenter",
             sourceKey: "id",
         });
+        db.User.belongsTo(db.Company, {
+            foreignKey: "company_id",
+            targetKey: "id",
+        });
     }
 }
 
