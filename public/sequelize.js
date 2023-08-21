@@ -1,10 +1,18 @@
 // 사용자 이름 눌렀을 때 댓글 로딩
-document.querySelectorAll("#user-list tr").forEach((el) => {
+document.querySelectorAll("#user-list tbody tr").forEach((el) => {
     el.addEventListener("click", function () {
         const id = el.querySelector("td").textContent;
         getComment(id);
     });
 });
+// 회사 이름 눌렀을 때 alert
+document.querySelectorAll("#company-list tbody tr").forEach((el) => {
+    el.addEventListener("click", () => {
+        const id = el.querySelector("td").textContent;
+        alert(id);
+    });
+})
+
 // 사용자 로딩
 async function getUser() {
     try {
@@ -31,12 +39,61 @@ async function getUser() {
             td = document.createElement("td");
             td.textContent = user.married ? "기혼" : "미혼";
             row.appendChild(td);
+            td = document.createElement("td");
+            td.textContent = user.company_id;
+            row.appendChild(td);
             tbody.appendChild(row);
         });
     } catch (err) {
         console.error(err);
     }
 }
+
+// 회사 로딩
+async function getCompany(){
+    try{
+        const res = await axios.get("/companies");
+        const companies = res.data;
+        console.log(companies);
+        const tbody = document.querySelector("#company-list tbody");
+        tbody.innerHTML = "";
+        companies.map((company) => {
+            const row = document.createElement("tr");
+            row.addEventListener("click", () => {
+                alert(`id: ${company.id}`);
+            })
+
+            let td = document.createElement("td");
+            td.textContent = company.id;
+            row.appendChild(td);
+            td = document.createElement("td");
+            td.textContent = company.name;
+            row.appendChild(td);
+            tbody.appendChild(row);
+        });
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// 회사 등록 시
+document.getElementById("company-form").addEventListener("submit", (e) => {
+    let name = e.target.name.value;
+
+    if(!name){
+        return alert("이름을 입력하세요.");
+    }
+
+    try{
+        axios.post("/companies", {name});
+        getCompany();
+    }catch(err){
+        console.error(err);
+    }
+
+    e.target.name.value = "";
+})
+
 // 댓글 로딩
 async function getComment(id) {
     try {
@@ -103,14 +160,19 @@ document.getElementById("user-form").addEventListener("submit", async (e) => {
     const name = e.target.username.value;
     const age = e.target.age.value;
     const married = e.target.married.checked;
+    const company_id = e.target.company_id.value;
     if (!name) {
         return alert("이름을 입력하세요");
     }
     if (!age) {
         return alert("나이를 입력하세요");
     }
+    if (!company_id) {
+        return alert("회사 번호를 입력하세요");
+    }
+
     try {
-        await axios.post("/users", { name, age, married });
+        await axios.post("/users", { name, age, married, company_id });
         getUser();
     } catch (err) {
         console.error(err);
