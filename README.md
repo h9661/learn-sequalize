@@ -7,8 +7,8 @@
 4. - [x] index router, user router, comment router 이해
 5. - [x] nunjucks 템플릿 엔진 파악하기
 6. - [x] jquery로 ajax 처리해보기
-7. - [ ] sequelize로 기존에 존재하는 table 수정해보기
-8. - [ ] 새로운 테이블로 ajax 기능 더 추가해서 사용해보기
+7. - [x] sequelize로 기존에 존재하는 table 수정해보기(migration으로 user 테이블에 company_id 외래키 추가함)
+8. - [x] 새로운 테이블로 ajax 기능 더 추가해서 사용해보기(company get api, post api 사용해봤음)
 
 
 
@@ -174,3 +174,6 @@ ON UPDATE CASCADE: 이 부분은 부모 레코드의 기본 키 값이 업데이
 `sequelize migration:create --name <filename>`
 
 `sequelize db:migrate`
+
+11. findById = findByPK
+
