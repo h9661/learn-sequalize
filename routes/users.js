@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
 const Comment = require("../models/comment");
+const Company = require("../models/company");
 
 const router = express.Router();
 
@@ -21,9 +22,12 @@ router
                 name: req.body.name,
                 age: req.body.age,
                 married: req.body.married,
+                company_id: req.body.company_id,
             });
+
             console.log(user);
             res.status(201).json(user);
+            
         } catch (err) {
             console.error(err);
             next(err);
